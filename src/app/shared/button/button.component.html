@@ -1,0 +1,14 @@
+<!-- Example for using ng-content for multiple slots -->
+<span>
+    <ng-content />
+</span>
+<span class="icon">
+    <!--We are expecting to project a content 
+    1- labeled with ngProjectAs="icon" or 
+    2- an icon tag.. 
+    This way we could put the clas..icon stuff inside this wrapper component -->
+    <ng-content select="icon">
+        + <!--Fallback content. This works if no element could be found
+        with ngProjectAs="icon"-->
+    </ng-content>
+</span>

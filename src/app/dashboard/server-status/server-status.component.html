@@ -1,7 +1,26 @@
-<app-dashboard-item [image]="{src: 'status.png', alt: 'A signal symbol'}"
+<app-dashboard-item
+  [image]="{ src: 'status.png', alt: 'A signal symbol' }"
   title="Server Status"
 >
-  <div>
+  <!-- This example shows adding classes dynamically, based on conditions. 
+ We use '..' here as it is not valid to use dashes inside object keys in
+ JavaScript and TypeScript. For CSS styles, you can use the alternative 
+ DOM styles: fontSize (without apostrophes) instead of 'font-size' -->
+  <div
+    [class]="{
+    status: true,
+    'status-online': currentStatus === 'online', 
+    'status-offline': currentStatus === 'offline', 
+    'status-unknown': currentStatus === 'unknown', 
+  }"
+    [style]="{
+      padding: '5px',
+      fontSize: '16px',
+      'background-color': 'beige'
+    }"
+    [style.fontFamily]="'Verdana'"
+    [style.fontSize]="100/5 + 'px'"
+  >
     @if (currentStatus === 'online') {
     <p>Servers are online</p>
     <p>All systems are operational.</p>

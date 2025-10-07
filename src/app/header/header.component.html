@@ -12,13 +12,12 @@
         <a href="/">Management</a>
       </li>
       <li>
-        <button>
-          <span>
-            Logout
-          </span>
-          <span class="icon">
-            →
-          </span>
+        <button appButton> 
+          <!--You still need to import Button component in ts file -->
+          Logout
+          <span ngProjectAs="icon">→</span>
+           <!--ngProjectAs allows to project a content into ng-content 
+           with the same select in the wrapper component -->
         </button>
       </li>
     </ul>
