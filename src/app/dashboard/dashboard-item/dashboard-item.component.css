@@ -21,15 +21,15 @@
   object-fit: contain;
 }
 
-@media (min-width: 768px) {
-  :host {
-    padding: 2rem;
-  }
-}
-
 h2 {
   margin: 0;
   font-size: 0.9rem;
   text-transform: uppercase;
   color: #504e50;
+}
+
+@media (min-width: 768px) {
+  :host {
+    padding: 2rem;
+  }
 }

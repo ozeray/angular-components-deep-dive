@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { DashboardItemComponent } from '../dashboard-item/dashboard-item.component';
 
 @Component({
@@ -11,23 +11,52 @@ import { DashboardItemComponent } from '../dashboard-item/dashboard-item.compone
 // ngOnInit() will run even if we dont implement OnInit, but
 // you should implement OnInit to avoid any typos in ngONInut(!) method name...
 export class ServerStatusComponent implements OnInit {
-  currentStatus: 'online' | 'offline' | 'unknown' = 'online';
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('online');
+  // private intervalId?: ReturnType<typeof setInterval>;
+  private destroyRef = inject(DestroyRef);
 
-  constructor() {}
+  // Example showing use of "effect" to subscribe to signal, which allows to 
+  // act upon signal changes...
+  // And another example showing how to perform some cleanup before the effect
+  // function runs again...
+  constructor() {
+    // effect(() => {
+    //   console.log("Current status is:", this.currentStatus());
+    // });
+    // effect((onCleanUp) => { 
+      // Timer will go on ticking if the status doesn't change.
+      // But will be cleared, and restart ticking if the status does change.
+    //   console.log("Current status is:", this.currentStatus());
+    //   let count = 0;
+    //   const timer = setInterval(() => {
+    //     count++;
+    //     console.log("Timer ticks: ", count);
+    //   }, 1000);
+    //   onCleanUp(() => clearInterval(timer));
+    // });
+  }
 
   ngOnInit() { // Similar to implementing inside the constructor. ngOnInit 
   // runs AFTER constructor, so all initialized variables (not inputs!)
   // are avaialble in ngOnInit.
   // Any inputs will be available inside ngOnInit.
-    setInterval(() => {
+    // this.intervalId = setInterval(() => {
+    const intrvlId = setInterval(() => {
       const rn = Math.random(); //0-0.99999999999
       if (rn < 0.5) {
-        this.currentStatus = 'offline';
+        this.currentStatus.set('offline');
       } else if (rn < 0.9) {
-        this.currentStatus = 'online';
+        this.currentStatus.set('online');
       } else {
-        this.currentStatus = 'unknown';
+        this.currentStatus.set('unknown');
       }
     }, 3000);
+
+    // Modern way of using destroyRef to register destroy listener:
+    this.destroyRef.onDestroy(() => clearInterval(intrvlId)); 
   }
+
+  // ngOnDestroy(): void {
+  //   clearInterval(this.intervalId);
+  // }
 }

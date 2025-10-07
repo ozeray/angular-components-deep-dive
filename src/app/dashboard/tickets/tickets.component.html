@@ -1,8 +1,25 @@
 <app-dashboard-item
-  [image]="{src: 'list.png', alt: 'A list of items'}"
+  [image]="{ src: 'list.png', alt: 'A list of items' }"
   title="Support Tickets"
 >
+  <div>
+    <ul>
+      @for (ticket of tickets; track ticket.id) { 
+        <!-- Special Angular for utility variables: -->
+        <!-- <li><app-ticket /> - {{ $first }}</li>
+        <li><app-ticket /> - {{ $last }}</li>
+        <li><app-ticket /> - {{ $even }}</li>
+        <li><app-ticket /> - {{ $odd }}</li>
+        <li><app-ticket /> - {{ $count }}</li> -->
+        <li>
+          <app-ticket [data]="ticket" (closeTicket)="onCloseTicket(ticket.id)" />
+        </li>
+      } @empty {
+        <p>No tickets available.</p>
+      }
+    </ul>
+  </div>
   <div id="new-ticket">
-    <app-new-ticket />
+    <app-new-ticket (add)="onAdd($event)" />
   </div>
 </app-dashboard-item>

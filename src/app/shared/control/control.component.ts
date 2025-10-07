@@ -1,6 +1,9 @@
 import { Target } from '@angular/compiler';
 import {
+  AfterContentInit,
   Component,
+  contentChild,
+  ContentChild,
   ElementRef,
   HostBinding,
   HostListener,
@@ -32,7 +35,7 @@ import {
 export class ControlComponent {
   title = input<string>();
 
-   // Old way of assigning attributes to host:
+  // Old way of assigning attributes to host:
   // @HostBinding('class') className = "control";
 
   /*
@@ -40,7 +43,7 @@ export class ControlComponent {
     console.log("Clicked", e.target);
   } */
 
-    /*
+  /*
   private el = inject(ElementRef); // Injecting host for programmatic access.
   // Assigning event listener using @HostListener:
   @HostListener('click', ['$event'])
@@ -50,4 +53,17 @@ export class ControlComponent {
   }
   */
 
+  // Example showing ContentChild usage:
+  // @ContentChild('input') inputElement?: 
+  //     ElementRef<HTMLInputElement | HTMLTextAreaElement>;
+  // @HostListener('click', ['$event'])
+  // onClick(e: Target) {
+  //   console.log(this.inputElement);    
+  // }
+
+  // Using AfterContentInit: 
+  // private inputElement = contentChild('input');
+  // ngAfterContentInit(): void {
+  //   console.log(this.inputElement());
+  // }
 }

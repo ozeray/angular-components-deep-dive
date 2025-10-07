@@ -5,26 +5,27 @@
   <!-- This example shows adding classes dynamically, based on conditions. 
  We use '..' here as it is not valid to use dashes inside object keys in
  JavaScript and TypeScript. For CSS styles, you can use the alternative 
- DOM styles: fontSize (without apostrophes) instead of 'font-size' -->
+ DOM styles: fontSize (without apostrophes) instead of 'font-size'. Other
+ use cases are also shown below. -->
   <div
     [class]="{
     status: true,
-    'status-online': currentStatus === 'online', 
-    'status-offline': currentStatus === 'offline', 
-    'status-unknown': currentStatus === 'unknown', 
+    'status-online': currentStatus() === 'online', 
+    'status-offline': currentStatus() === 'offline', 
+    'status-unknown': currentStatus() === 'unknown', 
   }"
     [style]="{
-      padding: '5px',
+      margin: '10px',
       fontSize: '16px',
-      'background-color': 'beige'
+      'background-color': 'aliceblue'
     }"
     [style.fontFamily]="'Verdana'"
-    [style.fontSize]="100/5 + 'px'"
+    [style.fontSize]="100/6 + 'px'"
   >
-    @if (currentStatus === 'online') {
+    @if (currentStatus() === 'online') {
     <p>Servers are online</p>
     <p>All systems are operational.</p>
-    } @else if (currentStatus === 'offline') {
+    } @else if (currentStatus() === 'offline') {
     <p>Servers are offline</p>
     <p>Functionality should be restored soon.</p>
     } @else {

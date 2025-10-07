@@ -1,12 +1,22 @@
-<form>
+<!-- Alternative to ngModel: Template variable use case. 
+ We create template variable starting with # character, then reference
+ it without # inside the template.
+ This way, we prevented the state to be updated with each keystroke. -->
+<!-- Example to show resetting the form, by taking form argument from the
+  template:
+  <form (ngSubmit)="onSubmit(titleInput.value, textInput.value, form)" #form> -->
+<!--#input is being used in my control component. -->
+<form (ngSubmit)="onSubmit(titleInput.value, textInput.value)" #form>
   <app-control title="Title">
-    <input name="title" id="title" />
+    <input name="title" id="title" #titleInput #input />
   </app-control>
   <app-control title="Request">
-    <textarea name="request" id="request" rows="3"></textarea>
+    <textarea name="request" id="request" #textInput #input rows="3"></textarea>
   </app-control>
   <p>
-    <button appButton>
+    <button appButton #btn> <!-- Now btn is not HTMLButtonElement, but
+      ButtonComponent, because the appButton component attribute converts
+      this into an Angular managed component.-->
       Submit
       <span ngProjectAs="icon">⌲</span>
     </button>
